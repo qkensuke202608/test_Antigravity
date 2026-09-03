@@ -61,7 +61,7 @@
       min-height: 100vh;
       min-height: -webkit-fill-available;
       overflow-x: hidden;
-      padding-bottom: 130px; /* 下部丸型ボタンバーの余白 */
+      padding-bottom: 86px; /* スリム化された下部丸型ボタンバーの余白 */
     }
 
     /* スマホ画面コンテナ */
@@ -564,14 +564,14 @@
     .fill-group-list {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
     .fill-item {
       background: #FFFFFF;
       border: 1.5px solid #F1F3F5;
-      border-radius: 20px;
-      padding: 14px 16px;
+      border-radius: 18px;
+      padding: 12px 14px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
       transition: all 0.2s;
     }
@@ -585,13 +585,13 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .fill-tag {
-      width: 24px;
-      height: 24px;
-      border-radius: 8px;
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
       background: var(--sunny-yellow-light);
       color: #946200;
       font-size: 11px;
@@ -613,16 +613,80 @@
       border: none;
       background: #F8FAFC;
       border-radius: 12px;
-      padding: 10px 14px;
+      padding: 9px 12px;
       font-size: 14px;
       font-weight: 600;
       color: var(--text-main);
       outline: none;
       font-family: inherit;
+      transition: background 0.15s;
     }
 
     .fill-input:focus {
       background: #FFFDF7;
+    }
+
+    /* 各項目直下の付箋候補チップ一覧 */
+    .fill-item-chips-wrap {
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px dashed #EEF2F6;
+    }
+
+    .fill-item-chips-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .fill-item-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .item-chip {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .item-chip:active {
+      transform: scale(0.93);
+    }
+
+    /* チップの付箋カテゴリ別アクセント */
+    .item-chip-title { border-color: #FFCCD5; background: #FFF0F3; color: #D61F4D; }
+    .item-chip-keyword { border-color: #C3F0D8; background: #EFFCF4; color: #00874E; }
+    .item-chip-message { border-color: #CBE6FF; background: #F0F7FF; color: #006CD9; }
+    .item-chip-conclusion { border-color: #FFE0A8; background: #FFF8EB; color: #B26A00; }
+
+    .item-chip.used {
+      opacity: 0.55;
+      border-style: dashed;
+      background: #F1F5F9;
+      color: #94A3B8;
+    }
+
+    .item-chips-empty {
+      font-size: 11px;
+      color: #94A3B8;
+      font-style: italic;
     }
 
     /* 穴埋めテンプレートプレビュー */
@@ -852,135 +916,139 @@
 
     /* ==========================================================================
        CIRCLE BUTTON SYSTEM (60px以上 丸型ボタン)
-       Apple受賞クオリティの触感・デザイン
+       スリム化されたフローティングアイランドDock
        ========================================================================== */
-    /* 下部固定フローティング操作バー */
+    /* 下部固定フローティング操作バー（高さを約65%スリム化） */
     .bottom-action-dock {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 8px;
+      left: 12px;
+      right: 12px;
+      max-width: 420px;
+      margin: 0 auto;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      border-top: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
-      padding: 10px 20px calc(12px + env(safe-area-inset-bottom));
+      border-radius: 36px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
+      padding: 5px 12px calc(5px + env(safe-area-inset-bottom));
       display: flex;
       justify-content: center;
     }
 
     .dock-content {
       width: 100%;
-      max-width: 480px;
       display: flex;
       justify-content: space-around;
       align-items: center;
     }
 
-    /* 64px〜70px の丸型ボタン定義 (60px以上) */
+    /* 60pxの丸型ボタン定義 (60px以上厳守 & 超スリム配置) */
     .circle-btn-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 2px;
     }
 
     .btn-circle {
-      width: 64px;
-      height: 64px;
-      min-width: 64px;
-      min-height: 64px;
+      width: 60px;
+      height: 60px;
+      min-width: 60px;
+      min-height: 60px;
       border-radius: 50%;
       border: none;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: var(--shadow-btn);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
       position: relative;
       outline: none;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
       -webkit-user-select: none;
       user-select: none;
     }
 
     /* タップ時のAppleらしいスプリング感 */
     .btn-circle:active {
-      transform: scale(0.90);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      transform: scale(0.91);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     /* カラー＆スタイル別丸ボタン */
     .btn-circle-coral {
       background: linear-gradient(135deg, #FF6B8B 0%, #FF4071 100%);
       color: #FFFFFF;
-      box-shadow: 0 10px 24px rgba(255, 64, 113, 0.4);
+      box-shadow: 0 6px 16px rgba(255, 64, 113, 0.35);
     }
 
     .btn-circle-green {
       background: linear-gradient(135deg, #25E296 0%, #00B96B 100%);
       color: #FFFFFF;
-      box-shadow: 0 10px 24px rgba(0, 185, 107, 0.4);
+      box-shadow: 0 6px 16px rgba(0, 185, 107, 0.35);
     }
 
     .btn-circle-sky {
       background: linear-gradient(135deg, #29B6F6 0%, #0288D1 100%);
       color: #FFFFFF;
-      box-shadow: 0 10px 24px rgba(2, 136, 209, 0.4);
+      box-shadow: 0 6px 16px rgba(2, 136, 209, 0.35);
     }
 
     .btn-circle-yellow {
       background: linear-gradient(135deg, #FFD54F 0%, #FFA000 100%);
       color: #FFFFFF;
-      box-shadow: 0 10px 24px rgba(255, 160, 0, 0.4);
+      box-shadow: 0 6px 16px rgba(255, 160, 0, 0.35);
     }
 
     .btn-circle-purple {
       background: linear-gradient(135deg, #A78BFA 0%, #7C3AED 100%);
       color: #FFFFFF;
-      box-shadow: 0 10px 24px rgba(124, 58, 237, 0.4);
+      box-shadow: 0 6px 16px rgba(124, 58, 237, 0.35);
     }
 
     .btn-circle-chatgpt {
       background: linear-gradient(135deg, #10A37F 0%, #057A55 100%);
       color: #FFFFFF;
-      box-shadow: 0 10px 24px rgba(16, 163, 127, 0.45);
+      box-shadow: 0 6px 16px rgba(16, 163, 127, 0.4);
     }
 
     .btn-circle-memo {
       background: linear-gradient(135deg, #FF9F0A 0%, #E67700 100%);
       color: #FFFFFF;
-      box-shadow: 0 10px 24px rgba(255, 159, 10, 0.4);
+      box-shadow: 0 6px 16px rgba(255, 159, 10, 0.35);
     }
 
     .btn-circle-neutral {
       background: #FFFFFF;
       color: var(--text-sub);
       border: 1.5px solid #E5E7EB;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
     }
 
-    /* 70pxのビッグ丸ボタン */
+    /* 62pxのわずかにアクセントのある丸ボタン */
     .btn-circle-large {
-      width: 70px;
-      height: 70px;
-      min-width: 70px;
-      min-height: 70px;
+      width: 62px;
+      height: 62px;
+      min-width: 62px;
+      min-height: 62px;
     }
 
     .btn-circle svg {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       fill: currentColor;
     }
 
     .circle-label {
-      font-size: 11px;
+      font-size: 9.5px;
       font-weight: 800;
       color: var(--text-sub);
       text-align: center;
+      line-height: 1;
+      margin-top: 1px;
       transition: color 0.2s;
     }
 
@@ -1206,18 +1274,7 @@
         <div class="card-title-box">
           <span class="card-badge badge-step2">手順 2 / 4</span>
           <h2 class="card-title">定型文で箇条書き整理 📋</h2>
-          <p class="card-desc">メモした付箋をタップすると簡単に入力できます！文章が苦手でも穴埋めならカンタン。</p>
-        </div>
-
-        <!-- 付箋からワンタップ入力チップ -->
-        <div class="quick-chips-area">
-          <div class="quick-chips-title">
-            <span>👆 メモした付箋（タップで項目に流し込み）</span>
-            <span id="chipsStatusText" style="color:var(--sunny-yellow); font-size:10px;"></span>
-          </div>
-          <div id="quickChipsScroller" class="quick-chips-scroller">
-            <span style="font-size: 12px; color: #94A3B8;">手順1でメモを追加するとここに並びます</span>
-          </div>
+          <p class="card-desc">各項目の下にあるメモした付箋をタップすると、その枠に入力されます！</p>
         </div>
 
         <!-- 箇条書き10項目リスト -->
@@ -1229,6 +1286,10 @@
               <label class="fill-label" for="fTheme">この授業のテーマ</label>
             </div>
             <input type="text" id="fTheme" class="fill-input" placeholder="例: 日本の再生可能エネルギーの現状と未来">
+            <div class="fill-item-chips-wrap">
+              <div class="fill-item-chips-label"><span>📌</span> 付箋から選んで追加：</div>
+              <div class="fill-item-chips" data-for="fTheme"></div>
+            </div>
           </div>
 
           <!-- ② わかったこと -->
@@ -1238,6 +1299,10 @@
               <label class="fill-label" for="fLearned">わかったこと（新しく知ったこと）</label>
             </div>
             <input type="text" id="fLearned" class="fill-input" placeholder="例: 太陽光発電のコストが10年で半分以下に下がったこと">
+            <div class="fill-item-chips-wrap">
+              <div class="fill-item-chips-label"><span>📌</span> 付箋から選んで追加：</div>
+              <div class="fill-item-chips" data-for="fLearned"></div>
+            </div>
           </div>
 
           <!-- ③ 印象に残ったこと -->
@@ -1247,6 +1312,10 @@
               <label class="fill-label" for="fImpression">特に印象に残ったこと</label>
             </div>
             <input type="text" id="fImpression" class="fill-input" placeholder="例: ドイツでは電力の半分以上を再エネでまかなっていること">
+            <div class="fill-item-chips-wrap">
+              <div class="fill-item-chips-label"><span>📌</span> 付箋から選んで追加：</div>
+              <div class="fill-item-chips" data-for="fImpression"></div>
+            </div>
           </div>
 
           <!-- ④ 興味を持ったこと -->
@@ -1256,6 +1325,10 @@
               <label class="fill-label" for="fInterest">興味を持ったこと</label>
             </div>
             <input type="text" id="fInterest" class="fill-input" placeholder="例: 洋上風力発電の技術進化">
+            <div class="fill-item-chips-wrap">
+              <div class="fill-item-chips-label"><span>📌</span> 付箋から選んで追加：</div>
+              <div class="fill-item-chips" data-for="fInterest"></div>
+            </div>
           </div>
 
           <!-- ⑤ 重要だと思ったこと -->
@@ -1265,6 +1338,10 @@
               <label class="fill-label" for="fImportant">重要だと思ったこと</label>
             </div>
             <input type="text" id="fImportant" class="fill-input" placeholder="例: 蓄電池の性能向上と安定供給">
+            <div class="fill-item-chips-wrap">
+              <div class="fill-item-chips-label"><span>📌</span> 付箋から選んで追加：</div>
+              <div class="fill-item-chips" data-for="fImportant"></div>
+            </div>
           </div>
 
           <!-- ⑥ メリット・重要性 -->
@@ -1274,6 +1351,10 @@
               <label class="fill-label" for="fMerit">メリット・重要性</label>
             </div>
             <input type="text" id="fMerit" class="fill-input" placeholder="例: CO2を出さず環境を守れる点">
+            <div class="fill-item-chips-wrap">
+              <div class="fill-item-chips-label"><span>📌</span> 付箋から選んで追加：</div>
+              <div class="fill-item-chips" data-for="fMerit"></div>
+            </div>
           </div>
 
           <!-- ⑦ 問題点・課題 -->
@@ -1283,6 +1364,10 @@
               <label class="fill-label" for="fIssue">問題点・課題</label>
             </div>
             <input type="text" id="fIssue" class="fill-input" placeholder="例: 天候に左右されやすく送電線整備にお金がかかること">
+            <div class="fill-item-chips-wrap">
+              <div class="fill-item-chips-label"><span>📌</span> 付箋から選んで追加：</div>
+              <div class="fill-item-chips" data-for="fIssue"></div>
+            </div>
           </div>
 
           <!-- ⑧ 自分の考え -->
@@ -1292,6 +1377,10 @@
               <label class="fill-label" for="fOpinion">自分の考え</label>
             </div>
             <input type="text" id="fOpinion" class="fill-input" placeholder="例: 課題はあるが日本も地域分散型の再エネを増やすべき">
+            <div class="fill-item-chips-wrap">
+              <div class="fill-item-chips-label"><span>📌</span> 付箋から選んで追加：</div>
+              <div class="fill-item-chips" data-for="fOpinion"></div>
+            </div>
           </div>
 
           <!-- ⑨ よくわからなかったこと -->
@@ -1301,6 +1390,10 @@
               <label class="fill-label" for="fUnclear">よくわからなかったこと</label>
             </div>
             <input type="text" id="fUnclear" class="fill-input" placeholder="例: 送電網の電力コントロールの詳しい仕組み">
+            <div class="fill-item-chips-wrap">
+              <div class="fill-item-chips-label"><span>📌</span> 付箋から選んで追加：</div>
+              <div class="fill-item-chips" data-for="fUnclear"></div>
+            </div>
           </div>
 
           <!-- ⑩ 具体的な行動 -->
@@ -1310,6 +1403,10 @@
               <label class="fill-label" for="fAction">具体的な行動</label>
             </div>
             <input type="text" id="fAction" class="fill-input" placeholder="例: 自宅の電気の使い方を見直し節電を心がける">
+            <div class="fill-item-chips-wrap">
+              <div class="fill-item-chips-label"><span>📌</span> 付箋から選んで追加：</div>
+              <div class="fill-item-chips" data-for="fAction"></div>
+            </div>
           </div>
         </div>
 
@@ -1381,7 +1478,10 @@
         <div class="export-preview-card">
           <div class="export-preview-header">
             <span class="export-preview-title">完成したレポート</span>
-            <span id="exportCharCount" style="font-size: 11px; font-weight: 700; color: var(--text-sub);">0字</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="exportCharCount" style="font-size: 11px; font-weight: 700; color: var(--text-sub);">0字</span>
+              <button type="button" id="btnCopyFromHeader" class="btn-sample" style="padding: 4px 10px; font-size: 11px; border-radius: 12px;">📋 コピー</button>
+            </div>
           </div>
           <div id="exportPreviewBox" class="export-preview-box">（手順3で文章を作成するとここにプレビューされます）</div>
         </div>
@@ -1470,8 +1570,6 @@
       const categoryChips = document.querySelectorAll('.category-chip');
 
       // Step 2 Elements
-      const quickChipsScroller = document.getElementById('quickChipsScroller');
-      const chipsStatusText = document.getElementById('chipsStatusText');
       const fillInputs = document.querySelectorAll('.fill-input');
       const fillItems = document.querySelectorAll('.fill-item');
 
@@ -1488,6 +1586,7 @@
       const exportPreviewBox = document.getElementById('exportPreviewBox');
       const exportCharCount = document.getElementById('exportCharCount');
       const btnLoadSample = document.getElementById('btnLoadSample');
+      const btnCopyFromHeader = document.getElementById('btnCopyFromHeader');
 
       // Modal Elements
       const modalOverlay = document.getElementById('modalOverlay');
@@ -1586,8 +1685,8 @@
 
         // ステップ別の初期化・同期
         if (step === 2) {
-          renderQuickChips();
           syncFormDataToInputs();
+          renderItemChips();
         } else if (step === 3) {
           if (!state.reportText.trim()) {
             generateReportFromForm();
@@ -1701,6 +1800,8 @@
 
           stickyBoard.appendChild(noteEl);
         });
+
+        renderItemChips();
       }
 
       noteInput.addEventListener('keydown', (e) => {
@@ -1725,27 +1826,43 @@
       });
 
       /* ========================================================================
-         STEP 2: 箇条書き & クイック流し込み
+         STEP 2: 箇条書き & 各項目直下の付箋チップ流し込み
          ======================================================================== */
-      function renderQuickChips() {
-        quickChipsScroller.innerHTML = '';
-        if (state.notes.length === 0) {
-          quickChipsScroller.innerHTML = '<span style="font-size: 12px; color: #94A3B8;">手順1でメモした言葉がここに並び、タップで入力できます</span>';
-          chipsStatusText.textContent = '';
-          return;
-        }
+      function renderItemChips() {
+        const chipContainers = document.querySelectorAll('.fill-item-chips');
+        chipContainers.forEach((container) => {
+          const fieldId = container.getAttribute('data-for');
+          const input = document.getElementById(fieldId);
+          container.innerHTML = '';
 
-        chipsStatusText.textContent = `選択中の枠: ${getFieldLabel(state.targetFieldForChip)}`;
+          if (state.notes.length === 0) {
+            container.innerHTML = '<span class="item-chips-empty">（手順1でメモした付箋がここに並びます）</span>';
+            return;
+          }
 
-        state.notes.forEach((n) => {
-          const chip = document.createElement('button');
-          chip.type = 'button';
-          chip.className = 'input-chip';
-          chip.innerHTML = `<span>📌</span> ${escapeHtml(n.text)}`;
-          chip.addEventListener('click', () => {
-            applyChipToField(n.text);
+          const currentVal = input ? input.value : '';
+
+          state.notes.forEach((n) => {
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = `item-chip item-chip-${n.cat}`;
+            
+            // 現在の入力欄にそのテキストが含まれているか
+            const isUsed = currentVal.includes(n.text);
+            if (isUsed) {
+              chip.classList.add('used');
+            }
+
+            chip.innerHTML = `${isUsed ? '✓ ' : '＋ '}${escapeHtml(n.text)}`;
+            chip.title = isUsed ? 'タップして枠から削除' : 'タップして枠に追加';
+
+            chip.addEventListener('click', (e) => {
+              e.preventDefault();
+              toggleChipToField(fieldId, n.text);
+            });
+
+            container.appendChild(chip);
           });
-          quickChipsScroller.appendChild(chip);
         });
       }
 
@@ -1753,37 +1870,45 @@
         const item = document.querySelector(`.fill-item[data-field-id="${fieldId}"]`);
         if (item) {
           const label = item.querySelector('.fill-label');
-          return label ? label.textContent.split('（')[0] : fieldId;
+          return label ? label.textContent.split('（')[0].trim() : fieldId;
         }
-        return 'この授業のテーマ';
+        return '項目';
       }
 
-      function applyChipToField(text) {
-        const input = document.getElementById(state.targetFieldForChip);
+      function toggleChipToField(fieldId, text) {
+        const input = document.getElementById(fieldId);
         if (!input) return;
 
-        if (input.value.trim() === '') {
-          input.value = text;
+        let current = input.value.trim();
+        if (current.includes(text)) {
+          // すでに含まれている場合は削除（トグル）
+          current = current
+            .replace(text, '')
+            .replace(/、、+/g, '、')
+            .replace(/^、|、$/g, '')
+            .trim();
+          input.value = current;
+          showToast('付箋を外しました', '↩️');
         } else {
-          input.value += `、${text}`;
+          // 追加
+          if (current === '') {
+            input.value = text;
+          } else {
+            input.value = `${current}、${text}`;
+          }
+          showToast(`${getFieldLabel(fieldId)} に追加！`, '✨');
         }
-        state.formData[state.targetFieldForChip] = input.value;
-        saveState();
 
-        // 成功エフェクト
-        input.focus();
-        showToast(`${getFieldLabel(state.targetFieldForChip)} に追加！`, '✨');
+        state.formData[fieldId] = input.value;
+        saveState();
+        renderItemChips();
       }
 
       fillInputs.forEach((inp) => {
-        inp.addEventListener('focus', () => {
-          state.targetFieldForChip = inp.id;
-          chipsStatusText.textContent = `選択中の枠: ${getFieldLabel(inp.id)}`;
-        });
-
         inp.addEventListener('input', () => {
           state.formData[inp.id] = inp.value;
           saveState();
+          renderItemChips(); // 入力変更に合わせてチップの✓マークをリアルタイム更新
         });
       });
 
@@ -2181,8 +2306,8 @@
           document.getElementById('btnDockNext').addEventListener('click', () => setStep(4));
 
         } else if (step === 4) {
-          // 手順4の丸ボタン（ChatGPTを開くボタン・メモ帳アプリを開くボタン）：
-          // [戻る] / [★ ChatGPT (64px)] / [★ メモ帳 (64px)]
+          // 手順4の丸ボタン（コピー・ChatGPT・メモ帳）：
+          // [戻る] / [★ コピー (60px)] / [★ ChatGPT (60px)] / [★ メモ帳 (60px)]
           dockContent.innerHTML = `
             <div class="circle-btn-wrapper">
               <button type="button" id="btnDockPrev" class="btn-circle btn-circle-neutral" title="手順3に戻る">
@@ -2192,14 +2317,21 @@
             </div>
 
             <div class="circle-btn-wrapper">
-              <button type="button" id="btnDockChatGPT" class="btn-circle btn-circle-chatgpt btn-circle-large" title="ChatGPTを開く">
+              <button type="button" id="btnDockCopy4" class="btn-circle btn-circle-coral" title="レポート文章をコピー">
+                <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              </button>
+              <span class="circle-label" style="color:var(--primary-coral);">コピー</span>
+            </div>
+
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockChatGPT" class="btn-circle btn-circle-chatgpt" title="ChatGPTを開く">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"/></svg>
               </button>
               <span class="circle-label" style="color:#10A37F;">ChatGPT</span>
             </div>
 
             <div class="circle-btn-wrapper">
-              <button type="button" id="btnDockMemo" class="btn-circle btn-circle-memo btn-circle-large" title="メモ帳アプリを開く">
+              <button type="button" id="btnDockMemo" class="btn-circle btn-circle-memo" title="メモ帳アプリを開く">
                 <svg viewBox="0 0 24 24"><path d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"/></svg>
               </button>
               <span class="circle-label" style="color:#FF9F0A;">メモ帳</span>
@@ -2207,6 +2339,7 @@
           `;
 
           document.getElementById('btnDockPrev').addEventListener('click', () => setStep(3));
+          document.getElementById('btnDockCopy4').addEventListener('click', copyReportText);
           document.getElementById('btnDockChatGPT').addEventListener('click', openChatGPT);
           document.getElementById('btnDockMemo').addEventListener('click', openMemoApp);
         }
@@ -2228,8 +2361,12 @@
       /* ========================================================================
          INITIALIZATION
          ======================================================================== */
+      if (btnCopyFromHeader) {
+        btnCopyFromHeader.addEventListener('click', copyReportText);
+      }
       loadSavedState();
       renderStickyBoard();
+      renderItemChips();
       setStep(1);
 
     })();
