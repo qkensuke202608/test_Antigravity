@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>レポポ！- 授業動画レポート作成ナビ</title>
+  <meta name="description" content="文章が苦手な高校生でもスマホでスイスイ！授業動画レポート作成アプリ">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="レポポ！">
+  <meta name="theme-color" content="#FFF5F7">
+  <style>
+    /* ==========================================================================
+       CSS RESET & DESIGN SYSTEM (Apple Award-Winning Aesthetic)
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      /* カラフル＆ポップなパレット（Appleらしい鮮やかさと親しみやすさ） */
+      --primary-coral: #FF5A79;
+      --primary-coral-light: #FFEBF0;
+      --sunny-yellow: #FFB300;
+      --sunny-yellow-light: #FFF8E1;
+      --mint-green: #00D084;
+      --mint-green-light: #E6FBF2;
+      --sky-blue: #00A6FF;
+      --sky-blue-light: #E6F6FF;
+      --violet-purple: #8B5CF6;
+      --violet-purple-light: #F3EEFF;
+      --sunset-orange: #FF7A00;
+      
+      /* UI基調カラー */
+      --bg-gradient: linear-gradient(170deg, #FFF5F7 0%, #F0F7FF 50%, #F5F3FF 100%);
+      --card-bg: rgba(255, 255, 255, 0.94);
+      --card-border: rgba(255, 255, 255, 0.8);
+      --text-main: #1D1D1F;
+      --text-sub: #6E6E73;
+      --text-muted: #8E8E93;
+      --surface-glass: rgba(255, 255, 255, 0.82);
+      
+      /* シャドウ＆エフェクト */
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 24px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.12);
+      --shadow-btn: 0 8px 20px rgba(0, 0, 0, 0.15);
+      
+      /* タイポグラフィ */
+      --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Hiragino Maru Gothic ProN", "Yu Gothic Rounded", sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: var(--font-family);
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      overflow-x: hidden;
+      padding-bottom: 130px; /* 下部丸型ボタンバーの余白 */
+    }
+
+    /* スマホ画面コンテナ */
+    .app-shell {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px 18px;
+      position: relative;
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-top: 4px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--primary-coral), var(--sunny-yellow));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 6px 14px rgba(255, 90, 121, 0.35);
+      animation: bounceSoft 2.5s infinite ease-in-out;
+    }
+
+    @keyframes bounceSoft {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #FF4071 0%, #8B5CF6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    /* サンプル投入ボタン */
+    .btn-sample {
+      border: none;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--violet-purple);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-sample:active {
+      transform: scale(0.94);
+      background: #fff;
+    }
+
+    /* ==========================================================================
+       STEP PROGRESS BAR
+       ========================================================================== */
+    .step-nav {
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--card-border);
+    }
+
+    .step-indicators {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .step-indicators::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      right: 20px;
+      height: 4px;
+      background: #E5E7EB;
+      z-index: 1;
+      border-radius: 2px;
+    }
+
+    .step-progress-line {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-coral), var(--sunny-yellow), var(--mint-green), var(--sky-blue));
+      z-index: 2;
+      border-radius: 2px;
+      transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0%;
+    }
+
+    .step-tab {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 25%;
+    }
+
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      color: var(--text-muted);
+      border: 2px solid #E5E7EB;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .step-tab.active .step-num {
+      background: var(--primary-coral);
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(255, 90, 121, 0.45);
+      transform: scale(1.15);
+    }
+
+    .step-tab.completed .step-num {
+      background: var(--mint-green);
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+      box-shadow: 0 4px 10px rgba(0, 208, 132, 0.3);
+    }
+
+    .step-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .step-tab.active .step-label {
+      color: var(--text-main);
+      font-weight: 800;
+    }
+
+    /* ==========================================================================
+       PAGE CONTAINER & ANIMATIONS
+       ========================================================================== */
+    .step-page {
+      display: none;
+      animation: fadeInSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .step-page.active {
+      display: block;
+    }
+
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      padding: 20px 18px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--card-border);
+      margin-bottom: 20px;
+      backdrop-filter: blur(12px);
+    }
+
+    .card-title-box {
+      margin-bottom: 16px;
+    }
+
+    .card-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .badge-step1 { background: var(--primary-coral-light); color: var(--primary-coral); }
+    .badge-step2 { background: var(--sunny-yellow-light); color: #B27B00; }
+    .badge-step3 { background: var(--mint-green-light); color: #00965F; }
+    .badge-step4 { background: var(--sky-blue-light); color: var(--sky-blue); }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-top: 4px;
+      line-height: 1.45;
+    }
+
+    /* ==========================================================================
+       STEP 1: 付箋メモ (STICKY NOTES)
+       ========================================================================== */
+    .note-category-picker {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .category-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: #F3F4F6;
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-sub);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .category-chip.selected {
+      border-color: currentColor;
+      background: #FFFFFF;
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
+
+    .cat-title { color: #FF3366; }
+    .cat-message { color: #0077FF; }
+    .cat-conclusion { color: #FF8800; }
+    .cat-keyword { color: #00B060; }
+
+    .note-input-container {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .note-input {
+      flex: 1;
+      height: 52px;
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      border-radius: 20px;
+      padding: 0 18px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .note-input:focus {
+      background: #FFFFFF;
+      border-color: var(--primary-coral);
+      box-shadow: 0 0 0 4px rgba(255, 90, 121, 0.15);
+    }
+
+    /* 付箋一覧ボード */
+    .sticky-board-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    .board-count {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-sub);
+    }
+
+    .btn-clear-text {
+      background: none;
+      border: none;
+      font-size: 12px;
+      font-weight: 700;
+      color: #9CA3AF;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+    .btn-clear-text:hover { color: #EF4444; }
+
+    .sticky-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      min-height: 120px;
+    }
+
+    .empty-notes-hint {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 36px 16px;
+      color: #94A3B8;
+      background: rgba(248, 250, 252, 0.8);
+      border-radius: 20px;
+      border: 2px dashed #CBD5E1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .empty-icon {
+      font-size: 36px;
+      filter: grayscale(0.2);
+    }
+
+    /* 個別の付箋カード */
+    .sticky-note {
+      position: relative;
+      padding: 14px 12px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+      word-break: break-word;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      transform: rotate(var(--rot, -1deg));
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 80px;
+    }
+
+    .sticky-note:hover, .sticky-note:active {
+      transform: scale(1.03) rotate(0deg);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+      z-index: 5;
+    }
+
+    .sticky-cat-tag {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 800;
+      opacity: 0.85;
+      margin-bottom: 4px;
+    }
+
+    .sticky-note-text {
+      color: #1F2937;
+      margin-bottom: 6px;
+    }
+
+    .sticky-delete-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.15);
+      border: none;
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .sticky-delete-btn:hover {
+      background: #EF4444;
+    }
+
+    /* 付箋カラーバリエーション */
+    .sticky-title {
+      background: linear-gradient(145deg, #FFD1DC 0%, #FFB6C1 100%);
+      border: 1px solid rgba(255, 105, 180, 0.3);
+    }
+    .sticky-message {
+      background: linear-gradient(145deg, #CFE7FF 0%, #BAE0FD 100%);
+      border: 1px solid rgba(0, 149, 255, 0.3);
+    }
+    .sticky-conclusion {
+      background: linear-gradient(145deg, #FFE8B8 0%, #FFDC91 100%);
+      border: 1px solid rgba(255, 170, 0, 0.3);
+    }
+    .sticky-keyword {
+      background: linear-gradient(145deg, #D0F7E0 0%, #B8F2D1 100%);
+      border: 1px solid rgba(0, 208, 132, 0.3);
+    }
+
+    /* ==========================================================================
+       STEP 2: 定型文穴埋め（箇条書き作成）
+       ========================================================================== */
+    .quick-chips-area {
+      background: #F8FAFC;
+      border-radius: 20px;
+      padding: 12px;
+      margin-bottom: 18px;
+      border: 1px solid #E2E8F0;
+    }
+
+    .quick-chips-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-sub);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quick-chips-scroller {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .quick-chips-scroller::-webkit-scrollbar { display: none; }
+
+    .input-chip {
+      background: #FFFFFF;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      border: 1px solid #E2E8F0;
+      white-space: nowrap;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .input-chip:active {
+      transform: scale(0.95);
+      background: var(--primary-coral-light);
+    }
+
+    .fill-group-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .fill-item {
+      background: #FFFFFF;
+      border: 1.5px solid #F1F3F5;
+      border-radius: 20px;
+      padding: 14px 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      transition: all 0.2s;
+    }
+
+    .fill-item:focus-within {
+      border-color: var(--sunny-yellow);
+      box-shadow: 0 4px 14px rgba(255, 179, 0, 0.2);
+    }
+
+    .fill-item-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .fill-tag {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: var(--sunny-yellow-light);
+      color: #946200;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fill-label {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      flex: 1;
+    }
+
+    .fill-input {
+      width: 100%;
+      border: none;
+      background: #F8FAFC;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+      font-family: inherit;
+    }
+
+    .fill-input:focus {
+      background: #FFFDF7;
+    }
+
+    /* 穴埋めテンプレートプレビュー */
+    .template-box {
+      margin-top: 20px;
+      background: linear-gradient(145deg, #FFFBEB 0%, #FFF8DC 100%);
+      border: 2px dashed #FCD34D;
+      border-radius: 22px;
+      padding: 16px;
+    }
+
+    .template-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: #B45309;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .template-content {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #451A03;
+      font-weight: 600;
+    }
+
+    .template-slot {
+      color: #DC2626;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ==========================================================================
+       STEP 3: 200字以内 レポート作成
+       ========================================================================== */
+    .counter-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: #F8FAFC;
+      border-radius: 18px;
+      margin-bottom: 14px;
+      border: 1px solid #E2E8F0;
+    }
+
+    .counter-info {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .counter-val {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--mint-green);
+      font-feature-settings: "tnum";
+      transition: color 0.2s;
+    }
+
+    .counter-limit {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .counter-status-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: var(--mint-green-light);
+      color: #008751;
+      transition: all 0.2s;
+    }
+
+    /* プログレスバー */
+    .char-progress-track {
+      width: 100%;
+      height: 8px;
+      background: #E5E7EB;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .char-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--mint-green);
+      border-radius: 4px;
+      transition: width 0.2s ease, background-color 0.2s ease;
+    }
+
+    /* テキストエディタ */
+    .report-textarea-wrap {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .report-textarea {
+      width: 100%;
+      min-height: 220px;
+      background: #FFFFFF;
+      border: 2px solid #E2E8F0;
+      border-radius: 22px;
+      padding: 16px 18px;
+      font-size: 15px;
+      line-height: 1.7;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+      resize: vertical;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .report-textarea:focus {
+      border-color: var(--mint-green);
+      box-shadow: 0 0 0 4px rgba(0, 208, 132, 0.15);
+    }
+
+    /* エディタ補助ボタン（丸型以外のアシストバー） */
+    .editor-assist-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      justify-content: flex-end;
+    }
+
+    .btn-assist {
+      background: #F1F5F9;
+      border: none;
+      border-radius: 12px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-assist:hover {
+      background: #E2E8F0;
+      color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       STEP 4: アプリ連携 & 仕上げ
+       ========================================================================== */
+    .export-preview-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 16px;
+      border: 1px solid #E2E8F0;
+      margin-bottom: 20px;
+    }
+
+    .export-preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .export-preview-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .export-preview-box {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-main);
+      background: #F8FAFC;
+      border-radius: 14px;
+      padding: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-weight: 500;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    .action-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .action-card {
+      background: #FFFFFF;
+      border-radius: 22px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+      border: 1.5px solid #F1F5F9;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .action-card-text {
+      flex: 1;
+    }
+
+    .action-card-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .action-card-desc {
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.4;
+    }
+
+    /* ==========================================================================
+       CIRCLE BUTTON SYSTEM (60px以上 丸型ボタン)
+       Apple受賞クオリティの触感・デザイン
+       ========================================================================== */
+    /* 下部固定フローティング操作バー */
+    .bottom-action-dock {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-top: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
+      padding: 10px 20px calc(12px + env(safe-area-inset-bottom));
+      display: flex;
+      justify-content: center;
+    }
+
+    .dock-content {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    /* 64px〜70px の丸型ボタン定義 (60px以上) */
+    .circle-btn-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-circle {
+      width: 64px;
+      height: 64px;
+      min-width: 64px;
+      min-height: 64px;
+      border-radius: 50%;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-btn);
+      position: relative;
+      outline: none;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* タップ時のAppleらしいスプリング感 */
+    .btn-circle:active {
+      transform: scale(0.90);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    }
+
+    /* カラー＆スタイル別丸ボタン */
+    .btn-circle-coral {
+      background: linear-gradient(135deg, #FF6B8B 0%, #FF4071 100%);
+      color: #FFFFFF;
+      box-shadow: 0 10px 24px rgba(255, 64, 113, 0.4);
+    }
+
+    .btn-circle-green {
+      background: linear-gradient(135deg, #25E296 0%, #00B96B 100%);
+      color: #FFFFFF;
+      box-shadow: 0 10px 24px rgba(0, 185, 107, 0.4);
+    }
+
+    .btn-circle-sky {
+      background: linear-gradient(135deg, #29B6F6 0%, #0288D1 100%);
+      color: #FFFFFF;
+      box-shadow: 0 10px 24px rgba(2, 136, 209, 0.4);
+    }
+
+    .btn-circle-yellow {
+      background: linear-gradient(135deg, #FFD54F 0%, #FFA000 100%);
+      color: #FFFFFF;
+      box-shadow: 0 10px 24px rgba(255, 160, 0, 0.4);
+    }
+
+    .btn-circle-purple {
+      background: linear-gradient(135deg, #A78BFA 0%, #7C3AED 100%);
+      color: #FFFFFF;
+      box-shadow: 0 10px 24px rgba(124, 58, 237, 0.4);
+    }
+
+    .btn-circle-chatgpt {
+      background: linear-gradient(135deg, #10A37F 0%, #057A55 100%);
+      color: #FFFFFF;
+      box-shadow: 0 10px 24px rgba(16, 163, 127, 0.45);
+    }
+
+    .btn-circle-memo {
+      background: linear-gradient(135deg, #FF9F0A 0%, #E67700 100%);
+      color: #FFFFFF;
+      box-shadow: 0 10px 24px rgba(255, 159, 10, 0.4);
+    }
+
+    .btn-circle-neutral {
+      background: #FFFFFF;
+      color: var(--text-sub);
+      border: 1.5px solid #E5E7EB;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    /* 70pxのビッグ丸ボタン */
+    .btn-circle-large {
+      width: 70px;
+      height: 70px;
+      min-width: 70px;
+      min-height: 70px;
+    }
+
+    .btn-circle svg {
+      width: 28px;
+      height: 28px;
+      fill: currentColor;
+    }
+
+    .circle-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-sub);
+      text-align: center;
+      transition: color 0.2s;
+    }
+
+    /* ==========================================================================
+       TOAST NOTIFICATION (通知バブル)
+       ========================================================================== */
+    .toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-60px);
+      background: rgba(29, 29, 31, 0.94);
+      color: #FFFFFF;
+      padding: 12px 22px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(12px);
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast-icon {
+      font-size: 18px;
+    }
+
+    /* モーダルダイアログ */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(6px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 999;
+    }
+    .modal-overlay.show {
+      display: flex;
+    }
+    .modal-box {
+      background: #FFFFFF;
+      border-radius: 28px;
+      padding: 24px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes modalPop {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .modal-body {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .modal-btn {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+    }
+    .modal-btn-cancel {
+      background: #F3F4F6;
+      color: var(--text-main);
+    }
+    .modal-btn-danger {
+      background: #EF4444;
+      color: #FFFFFF;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- トースト通知 -->
+  <div id="toast" class="toast">
+    <span id="toastIcon" class="toast-icon">✨</span>
+    <span id="toastMsg">コピーしました！</span>
+  </div>
+
+  <!-- 確認モーダル -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal-box">
+      <div id="modalTitle" class="modal-title">メモをクリアしますか？</div>
+      <div id="modalBody" class="modal-body">付箋メモがすべて消去されます。よろしいですか？</div>
+      <div class="modal-actions">
+        <button id="modalBtnCancel" class="modal-btn modal-btn-cancel">キャンセル</button>
+        <button id="modalBtnConfirm" class="modal-btn modal-btn-danger">クリアする</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    
+    <!-- ヘッダー -->
+    <header>
+      <div class="brand">
+        <div class="brand-icon">📝</div>
+        <div>
+          <h1 class="brand-title">レポポ！</h1>
+          <p class="brand-subtitle">動画レポート作成ナビゲーター</p>
+        </div>
+      </div>
+      <button id="btnLoadSample" class="btn-sample" title="高校生向けの記入例を入力します">
+        <span>🪄</span> 見本を入れる
+      </button>
+    </header>
+
+    <!-- ステップ進行バー (1〜4) -->
+    <nav class="step-nav" aria-label="手順進行状況">
+      <div class="step-indicators">
+        <div id="stepProgressLine" class="step-progress-line"></div>
+        
+        <button class="step-tab active" data-step="1">
+          <div class="step-num">1</div>
+          <span class="step-label">付箋メモ</span>
+        </button>
+
+        <button class="step-tab" data-step="2">
+          <div class="step-num">2</div>
+          <span class="step-label">箇条書き</span>
+        </button>
+
+        <button class="step-tab" data-step="3">
+          <div class="step-num">3</div>
+          <span class="step-label">200字文</span>
+        </button>
+
+        <button class="step-tab" data-step="4">
+          <div class="step-num">4</div>
+          <span class="step-label">出力・AI</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ====================================================================
+         手順1: 授業動画を視聴しながら単語や言葉を付箋にメモ
+         ==================================================================== -->
+    <section id="pageStep1" class="step-page active">
+      <div class="card">
+        <div class="card-title-box">
+          <span class="card-badge badge-step1">手順 1 / 4</span>
+          <h2 class="card-title">動画を見ながら付箋メモ 📌</h2>
+          <p class="card-desc">気になった言葉や大事なメッセージをポンポンメモ！あとでレポートの材料になります。</p>
+        </div>
+
+        <!-- カテゴリ選択 -->
+        <div class="note-category-picker">
+          <button type="button" class="category-chip cat-title selected" data-cat="title">
+            <span>🏷️</span> ① 見出し・テーマ
+          </button>
+          <button type="button" class="category-chip cat-keyword" data-cat="keyword">
+            <span>🔑</span> ④ 単語・キーワード
+          </button>
+          <button type="button" class="category-chip cat-message" data-cat="message">
+            <span>💬</span> ② 重要なメッセージ
+          </button>
+          <button type="button" class="category-chip cat-conclusion" data-cat="conclusion">
+            <span>💡</span> ③ 結論・まとめ
+          </button>
+        </div>
+
+        <!-- 入力フォーム -->
+        <div class="note-input-container">
+          <input type="text" id="noteInput" class="note-input" placeholder="動画の言葉をメモ... (例: 再生可能エネルギー)" autocomplete="off">
+        </div>
+
+        <!-- 付箋一覧ボードヘッダー -->
+        <div class="sticky-board-header">
+          <span class="board-count" id="notesCountLabel">集めた付箋：0枚</span>
+          <button type="button" id="btnClearNotes" class="btn-clear-text">付箋を全クリア</button>
+        </div>
+
+        <!-- 付箋一覧 -->
+        <div id="stickyBoard" class="sticky-grid">
+          <div class="empty-notes-hint" id="emptyNotesHint">
+            <span class="empty-icon">📝✨</span>
+            <strong>まだ付箋がありません</strong>
+            <span>上の枠に言葉を入力して、下の「＋メモ追加」丸ボタンを押してね！</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         手順2: 定型文に当てはめて箇条書きを作る
+         ==================================================================== -->
+    <section id="pageStep2" class="step-page">
+      <div class="card">
+        <div class="card-title-box">
+          <span class="card-badge badge-step2">手順 2 / 4</span>
+          <h2 class="card-title">定型文で箇条書き整理 📋</h2>
+          <p class="card-desc">メモした付箋をタップすると簡単に入力できます！文章が苦手でも穴埋めならカンタン。</p>
+        </div>
+
+        <!-- 付箋からワンタップ入力チップ -->
+        <div class="quick-chips-area">
+          <div class="quick-chips-title">
+            <span>👆 メモした付箋（タップで項目に流し込み）</span>
+            <span id="chipsStatusText" style="color:var(--sunny-yellow); font-size:10px;"></span>
+          </div>
+          <div id="quickChipsScroller" class="quick-chips-scroller">
+            <span style="font-size: 12px; color: #94A3B8;">手順1でメモを追加するとここに並びます</span>
+          </div>
+        </div>
+
+        <!-- 箇条書き10項目リスト -->
+        <div class="fill-group-list">
+          <!-- ① テーマ -->
+          <div class="fill-item" data-field-id="fTheme">
+            <div class="fill-item-header">
+              <span class="fill-tag">①</span>
+              <label class="fill-label" for="fTheme">この授業のテーマ</label>
+            </div>
+            <input type="text" id="fTheme" class="fill-input" placeholder="例: 日本の再生可能エネルギーの現状と未来">
+          </div>
+
+          <!-- ② わかったこと -->
+          <div class="fill-item" data-field-id="fLearned">
+            <div class="fill-item-header">
+              <span class="fill-tag">②</span>
+              <label class="fill-label" for="fLearned">わかったこと（新しく知ったこと）</label>
+            </div>
+            <input type="text" id="fLearned" class="fill-input" placeholder="例: 太陽光発電のコストが10年で半分以下に下がったこと">
+          </div>
+
+          <!-- ③ 印象に残ったこと -->
+          <div class="fill-item" data-field-id="fImpression">
+            <div class="fill-item-header">
+              <span class="fill-tag">③</span>
+              <label class="fill-label" for="fImpression">特に印象に残ったこと</label>
+            </div>
+            <input type="text" id="fImpression" class="fill-input" placeholder="例: ドイツでは電力の半分以上を再エネでまかなっていること">
+          </div>
+
+          <!-- ④ 興味を持ったこと -->
+          <div class="fill-item" data-field-id="fInterest">
+            <div class="fill-item-header">
+              <span class="fill-tag">④</span>
+              <label class="fill-label" for="fInterest">興味を持ったこと</label>
+            </div>
+            <input type="text" id="fInterest" class="fill-input" placeholder="例: 洋上風力発電の技術進化">
+          </div>
+
+          <!-- ⑤ 重要だと思ったこと -->
+          <div class="fill-item" data-field-id="fImportant">
+            <div class="fill-item-header">
+              <span class="fill-tag">⑤</span>
+              <label class="fill-label" for="fImportant">重要だと思ったこと</label>
+            </div>
+            <input type="text" id="fImportant" class="fill-input" placeholder="例: 蓄電池の性能向上と安定供給">
+          </div>
+
+          <!-- ⑥ メリット・重要性 -->
+          <div class="fill-item" data-field-id="fMerit">
+            <div class="fill-item-header">
+              <span class="fill-tag">⑥</span>
+              <label class="fill-label" for="fMerit">メリット・重要性</label>
+            </div>
+            <input type="text" id="fMerit" class="fill-input" placeholder="例: CO2を出さず環境を守れる点">
+          </div>
+
+          <!-- ⑦ 問題点・課題 -->
+          <div class="fill-item" data-field-id="fIssue">
+            <div class="fill-item-header">
+              <span class="fill-tag">⑦</span>
+              <label class="fill-label" for="fIssue">問題点・課題</label>
+            </div>
+            <input type="text" id="fIssue" class="fill-input" placeholder="例: 天候に左右されやすく送電線整備にお金がかかること">
+          </div>
+
+          <!-- ⑧ 自分の考え -->
+          <div class="fill-item" data-field-id="fOpinion">
+            <div class="fill-item-header">
+              <span class="fill-tag">⑧</span>
+              <label class="fill-label" for="fOpinion">自分の考え</label>
+            </div>
+            <input type="text" id="fOpinion" class="fill-input" placeholder="例: 課題はあるが日本も地域分散型の再エネを増やすべき">
+          </div>
+
+          <!-- ⑨ よくわからなかったこと -->
+          <div class="fill-item" data-field-id="fUnclear">
+            <div class="fill-item-header">
+              <span class="fill-tag">⑨</span>
+              <label class="fill-label" for="fUnclear">よくわからなかったこと</label>
+            </div>
+            <input type="text" id="fUnclear" class="fill-input" placeholder="例: 送電網の電力コントロールの詳しい仕組み">
+          </div>
+
+          <!-- ⑩ 具体的な行動 -->
+          <div class="fill-item" data-field-id="fAction">
+            <div class="fill-item-header">
+              <span class="fill-tag">⑩</span>
+              <label class="fill-label" for="fAction">具体的な行動</label>
+            </div>
+            <input type="text" id="fAction" class="fill-input" placeholder="例: 自宅の電気の使い方を見直し節電を心がける">
+          </div>
+        </div>
+
+        <!-- 穴埋めテンプレート参考プレビュー -->
+        <div class="template-box">
+          <div class="template-header">
+            <span>💡 穴埋めテンプレート構成</span>
+          </div>
+          <div class="template-content">
+            今回の授業動画では、<span class="template-slot">【①テーマ】</span>について学びました。動画を視聴して、<span class="template-slot">【②わかったこと】</span>ことがよく分かりました。特に印象に残ったのは、<span class="template-slot">【③印象に残ったこと】</span>です。また、<span class="template-slot">【④興味を持ったこと】</span>について興味を持ち、もっと調べてみようと思いました。<span class="template-slot">【①テーマ】</span>には<span class="template-slot">【⑥メリット】</span>がある一方で、<span class="template-slot">【⑦課題】</span>もあることもわかりました。このことから、私は<span class="template-slot">【⑧自分の考え】</span>と考えました。今後は今回<span class="template-slot">【⑨わからなかったこと】</span>をもう少し勉強していきたいと思います。さらに、<span class="template-slot">【⑩具体的な行動】</span>にも取り組んでみたいと思いました。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         手順3: 箇条書きを元に、200字以内の文章を作ってみる
+         ==================================================================== -->
+    <section id="pageStep3" class="step-page">
+      <div class="card">
+        <div class="card-title-box">
+          <span class="card-badge badge-step3">手順 3 / 4</span>
+          <h2 class="card-title">200字以内の文章に仕上げ ✍️</h2>
+          <p class="card-desc">箇条書きから自動生成されました！文字数を見ながら自由に編集できます。</p>
+        </div>
+
+        <!-- 文字数カウンター & プログレス -->
+        <div class="counter-banner">
+          <div class="counter-info">
+            <span id="charCount" class="counter-val">0</span>
+            <span class="counter-limit">/ 200 字</span>
+          </div>
+          <span id="charStatusBadge" class="counter-status-badge">余裕あり 🌿</span>
+        </div>
+
+        <div class="char-progress-track">
+          <div id="charProgressFill" class="char-progress-fill"></div>
+        </div>
+
+        <!-- レポートテキストエリア -->
+        <div class="report-textarea-wrap">
+          <textarea id="reportTextarea" class="report-textarea" placeholder="手順2の内容をもとに、ここに200字のレポート文章が生成されます。直接編集もできます！"></textarea>
+        </div>
+
+        <!-- 補助アクション -->
+        <div class="editor-assist-bar">
+          <button type="button" id="btnFit200" class="btn-assist" title="文章が200字を超えた場合に自動調整">
+            <span>✂️</span> 200字以内に調整
+          </button>
+          <button type="button" id="btnRegenerate" class="btn-assist" title="箇条書きの内容からもう一度組み立てる">
+            <span>🔄</span> 箇条書きから再生成
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         手順4: ChatGPTを開く・メモ帳アプリを開く・完成
+         ==================================================================== -->
+    <section id="pageStep4" class="step-page">
+      <div class="card">
+        <div class="card-title-box">
+          <span class="card-badge badge-step4">手順 4 / 4</span>
+          <h2 class="card-title">完成！AI添削 & メモ帳へ保存 🚀</h2>
+          <p class="card-desc">完成したレポートをChatGPTに添削してもらったり、スマホのメモ帳や提出先に送ろう！</p>
+        </div>
+
+        <!-- 完成レポートプレビュー -->
+        <div class="export-preview-card">
+          <div class="export-preview-header">
+            <span class="export-preview-title">完成したレポート</span>
+            <span id="exportCharCount" style="font-size: 11px; font-weight: 700; color: var(--text-sub);">0字</span>
+          </div>
+          <div id="exportPreviewBox" class="export-preview-box">（手順3で文章を作成するとここにプレビューされます）</div>
+        </div>
+
+        <!-- アプリ連携説明カード -->
+        <div class="action-cards-grid">
+          <!-- ChatGPTカード -->
+          <div class="action-card">
+            <div class="action-card-text">
+              <div class="action-card-title">🤖 ChatGPTで添削する</div>
+              <div class="action-card-desc">作成した文章をコピーしてChatGPTを開きます。「もっと良くして！」と頼んでみよう。</div>
+            </div>
+          </div>
+
+          <!-- メモ帳・共有カード -->
+          <div class="action-card">
+            <div class="action-card-text">
+              <div class="action-card-title">📱 メモ帳アプリに送る</div>
+              <div class="action-card-desc">スマホの「メモ」アプリやLINE、Google Keepなどに1タップで保存・共有できます。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /app-shell -->
+
+  <!-- ====================================================================
+       BOTTOM ACTION DOCK (丸型ボタン 60px以上)
+       各ステップに応じて最適なボタンを表示
+       ==================================================================== -->
+  <div class="bottom-action-dock">
+    <div class="dock-content" id="dockContent">
+      <!-- JavaScriptで動的生成または制御 -->
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT LOGIC
+       ========================================================================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      /* --- APP STATE --- */
+      const state = {
+        currentStep: 1,
+        selectedCategory: 'title', // title, keyword, message, conclusion
+        notes: [], // [{ id, text, cat }]
+        formData: {
+          fTheme: '',
+          fLearned: '',
+          fImpression: '',
+          fInterest: '',
+          fImportant: '',
+          fMerit: '',
+          fIssue: '',
+          fOpinion: '',
+          fUnclear: '',
+          fAction: ''
+        },
+        reportText: '',
+        targetFieldForChip: 'fTheme' // 直近で選択・フォーカスされた入力欄
+      };
+
+      /* --- DOM ELEMENTS --- */
+      const stepProgressLine = document.getElementById('stepProgressLine');
+      const stepTabs = document.querySelectorAll('.step-tab');
+      const stepPages = {
+        1: document.getElementById('pageStep1'),
+        2: document.getElementById('pageStep2'),
+        3: document.getElementById('pageStep3'),
+        4: document.getElementById('pageStep4')
+      };
+      const dockContent = document.getElementById('dockContent');
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      const toastIcon = document.getElementById('toastIcon');
+
+      // Step 1 Elements
+      const noteInput = document.getElementById('noteInput');
+      const stickyBoard = document.getElementById('stickyBoard');
+      const emptyNotesHint = document.getElementById('emptyNotesHint');
+      const notesCountLabel = document.getElementById('notesCountLabel');
+      const btnClearNotes = document.getElementById('btnClearNotes');
+      const categoryChips = document.querySelectorAll('.category-chip');
+
+      // Step 2 Elements
+      const quickChipsScroller = document.getElementById('quickChipsScroller');
+      const chipsStatusText = document.getElementById('chipsStatusText');
+      const fillInputs = document.querySelectorAll('.fill-input');
+      const fillItems = document.querySelectorAll('.fill-item');
+
+      // Step 3 Elements
+      const reportTextarea = document.getElementById('reportTextarea');
+      const charCount = document.getElementById('charCount');
+      const charLimit = 200;
+      const charProgressFill = document.getElementById('charProgressFill');
+      const charStatusBadge = document.getElementById('charStatusBadge');
+      const btnFit200 = document.getElementById('btnFit200');
+      const btnRegenerate = document.getElementById('btnRegenerate');
+
+      // Step 4 Elements
+      const exportPreviewBox = document.getElementById('exportPreviewBox');
+      const exportCharCount = document.getElementById('exportCharCount');
+      const btnLoadSample = document.getElementById('btnLoadSample');
+
+      // Modal Elements
+      const modalOverlay = document.getElementById('modalOverlay');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalBody = document.getElementById('modalBody');
+      const modalBtnCancel = document.getElementById('modalBtnCancel');
+      const modalBtnConfirm = document.getElementById('modalBtnConfirm');
+      let modalConfirmCallback = null;
+
+      /* ========================================================================
+         STORAGE HANDLING
+         ======================================================================== */
+      function saveState() {
+        try {
+          localStorage.setItem('repopo_state', JSON.stringify({
+            notes: state.notes,
+            formData: state.formData,
+            reportText: state.reportText
+          }));
+        } catch (e) {
+          console.warn('Storage save failed:', e);
+        }
+      }
+
+      function loadSavedState() {
+        try {
+          const raw = localStorage.getItem('repopo_state');
+          if (raw) {
+            const data = JSON.parse(raw);
+            if (Array.isArray(data.notes)) state.notes = data.notes;
+            if (data.formData) state.formData = Object.assign(state.formData, data.formData);
+            if (typeof data.reportText === 'string') state.reportText = data.reportText;
+          }
+        } catch (e) {
+          console.warn('Storage load failed:', e);
+        }
+      }
+
+      /* ========================================================================
+         UI NOTIFICATIONS & MODAL
+         ======================================================================== */
+      let toastTimer = null;
+      function showToast(message, icon = '✨') {
+        toastMsg.textContent = message;
+        toastIcon.textContent = icon;
+        toast.classList.add('show');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2200);
+      }
+
+      function openModal({ title, body, confirmText = 'クリアする', onConfirm }) {
+        modalTitle.textContent = title;
+        modalBody.textContent = body;
+        modalBtnConfirm.textContent = confirmText;
+        modalConfirmCallback = onConfirm;
+        modalOverlay.classList.add('show');
+      }
+
+      modalBtnCancel.addEventListener('click', () => {
+        modalOverlay.classList.remove('show');
+        modalConfirmCallback = null;
+      });
+
+      modalBtnConfirm.addEventListener('click', () => {
+        if (modalConfirmCallback) modalConfirmCallback();
+        modalOverlay.classList.remove('show');
+      });
+
+      /* ========================================================================
+         STEP NAVIGATION
+         ======================================================================== */
+      function setStep(step) {
+        state.currentStep = step;
+
+        // タブUI更新
+        stepTabs.forEach((tab) => {
+          const s = parseInt(tab.getAttribute('data-step'), 10);
+          tab.classList.remove('active', 'completed');
+          if (s === step) {
+            tab.classList.add('active');
+          } else if (s < step) {
+            tab.classList.add('completed');
+          }
+        });
+
+        // プログレスバー更新 (0%, 33.3%, 66.6%, 100%)
+        const pct = ((step - 1) / 3) * 100;
+        stepProgressLine.style.width = `${pct}%`;
+
+        // ページ切り替え
+        Object.keys(stepPages).forEach((k) => {
+          stepPages[k].classList.toggle('active', parseInt(k, 10) === step);
+        });
+
+        // ステップ別の初期化・同期
+        if (step === 2) {
+          renderQuickChips();
+          syncFormDataToInputs();
+        } else if (step === 3) {
+          if (!state.reportText.trim()) {
+            generateReportFromForm();
+          } else {
+            reportTextarea.value = state.reportText;
+            updateCharCount();
+          }
+        } else if (step === 4) {
+          exportPreviewBox.textContent = state.reportText.trim() || '（レポート文がまだ作成されていません。手順3に戻って作成してください）';
+          exportCharCount.textContent = `${state.reportText.length}字`;
+        }
+
+        // 丸型ボトムドック再描画
+        renderBottomDock();
+
+        // 画面トップへスムーズスクロール
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      stepTabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const s = parseInt(tab.getAttribute('data-step'), 10);
+          setStep(s);
+        });
+      });
+
+      /* ========================================================================
+         STEP 1: 付箋メモ LOGIC
+         ======================================================================== */
+      categoryChips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          categoryChips.forEach(c => c.classList.remove('selected'));
+          chip.classList.add('selected');
+          state.selectedCategory = chip.getAttribute('data-cat');
+          noteInput.focus();
+        });
+      });
+
+      function addStickyNote(text, cat = state.selectedCategory) {
+        const trimmed = text.trim();
+        if (!trimmed) {
+          showToast('メモの言葉を入力してね！', '💡');
+          noteInput.focus();
+          return;
+        }
+
+        const newNote = {
+          id: 'note_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+          text: trimmed,
+          cat: cat
+        };
+
+        state.notes.push(newNote);
+        noteInput.value = '';
+        renderStickyBoard();
+        saveState();
+        showToast('付箋を追加しました！', '📌');
+      }
+
+      function deleteStickyNote(id) {
+        state.notes = state.notes.filter(n => n.id !== id);
+        renderStickyBoard();
+        saveState();
+      }
+
+      function getCategoryMeta(cat) {
+        switch (cat) {
+          case 'title': return { label: '① タイトル・見出し', class: 'sticky-title' };
+          case 'keyword': return { label: '④ 単語・キーワード', class: 'sticky-keyword' };
+          case 'message': return { label: '② 重要メッセージ', class: 'sticky-message' };
+          case 'conclusion': return { label: '③ 結論・まとめ', class: 'sticky-conclusion' };
+          default: return { label: 'メモ', class: 'sticky-keyword' };
+        }
+      }
+
+      function renderStickyBoard() {
+        notesCountLabel.textContent = `集めた付箋：${state.notes.length}枚`;
+        stickyBoard.innerHTML = '';
+
+        if (state.notes.length === 0) {
+          stickyBoard.appendChild(emptyNotesHint);
+          return;
+        }
+
+        state.notes.forEach((n, idx) => {
+          const meta = getCategoryMeta(n.cat);
+          const noteEl = document.createElement('div');
+          noteEl.className = `sticky-note ${meta.class}`;
+          // わずかにランダムな傾きを付与してリアルな付箋感を演出
+          const rot = ((idx % 5) - 2) * 1.5;
+          noteEl.style.setProperty('--rot', `${rot}deg`);
+
+          noteEl.innerHTML = `
+            <span class="sticky-cat-tag">${meta.label}</span>
+            <div class="sticky-note-text">${escapeHtml(n.text)}</div>
+            <button type="button" class="sticky-delete-btn" title="付箋を削除" data-id="${n.id}">✕</button>
+          `;
+
+          // 削除ボタン
+          noteEl.querySelector('.sticky-delete-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            deleteStickyNote(n.id);
+          });
+
+          // 付箋タップで編集
+          noteEl.addEventListener('click', () => {
+            noteInput.value = n.text;
+            noteInput.focus();
+            showToast('編集できます（＋で新しく追加）', '✏️');
+          });
+
+          stickyBoard.appendChild(noteEl);
+        });
+      }
+
+      noteInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addStickyNote(noteInput.value);
+        }
+      });
+
+      btnClearNotes.addEventListener('click', () => {
+        if (state.notes.length === 0) return;
+        openModal({
+          title: '付箋をクリアしますか？',
+          body: 'メモしたすべての付箋が消去されます。よろしいですか？',
+          onConfirm: () => {
+            state.notes = [];
+            renderStickyBoard();
+            saveState();
+            showToast('付箋をクリアしました', '🧹');
+          }
+        });
+      });
+
+      /* ========================================================================
+         STEP 2: 箇条書き & クイック流し込み
+         ======================================================================== */
+      function renderQuickChips() {
+        quickChipsScroller.innerHTML = '';
+        if (state.notes.length === 0) {
+          quickChipsScroller.innerHTML = '<span style="font-size: 12px; color: #94A3B8;">手順1でメモした言葉がここに並び、タップで入力できます</span>';
+          chipsStatusText.textContent = '';
+          return;
+        }
+
+        chipsStatusText.textContent = `選択中の枠: ${getFieldLabel(state.targetFieldForChip)}`;
+
+        state.notes.forEach((n) => {
+          const chip = document.createElement('button');
+          chip.type = 'button';
+          chip.className = 'input-chip';
+          chip.innerHTML = `<span>📌</span> ${escapeHtml(n.text)}`;
+          chip.addEventListener('click', () => {
+            applyChipToField(n.text);
+          });
+          quickChipsScroller.appendChild(chip);
+        });
+      }
+
+      function getFieldLabel(fieldId) {
+        const item = document.querySelector(`.fill-item[data-field-id="${fieldId}"]`);
+        if (item) {
+          const label = item.querySelector('.fill-label');
+          return label ? label.textContent.split('（')[0] : fieldId;
+        }
+        return 'この授業のテーマ';
+      }
+
+      function applyChipToField(text) {
+        const input = document.getElementById(state.targetFieldForChip);
+        if (!input) return;
+
+        if (input.value.trim() === '') {
+          input.value = text;
+        } else {
+          input.value += `、${text}`;
+        }
+        state.formData[state.targetFieldForChip] = input.value;
+        saveState();
+
+        // 成功エフェクト
+        input.focus();
+        showToast(`${getFieldLabel(state.targetFieldForChip)} に追加！`, '✨');
+      }
+
+      fillInputs.forEach((inp) => {
+        inp.addEventListener('focus', () => {
+          state.targetFieldForChip = inp.id;
+          chipsStatusText.textContent = `選択中の枠: ${getFieldLabel(inp.id)}`;
+        });
+
+        inp.addEventListener('input', () => {
+          state.formData[inp.id] = inp.value;
+          saveState();
+        });
+      });
+
+      function syncFormDataToInputs() {
+        Object.keys(state.formData).forEach((k) => {
+          const inp = document.getElementById(k);
+          if (inp) inp.value = state.formData[k] || '';
+        });
+      }
+
+      /* ========================================================================
+         STEP 3: 穴埋めテンプレート展開 & 200字カウント
+         ======================================================================== */
+      function generateReportFromForm() {
+        const fd = state.formData;
+
+        // 各項目を自然に埋め込む
+        const theme = fd.fTheme.trim() || '授業の重要テーマ';
+        const learned = fd.fLearned.trim() || '基本的な考え方';
+        const impression = fd.fImpression.trim() || '先生の具体的な解説';
+        const interest = fd.fInterest.trim() || '今後の発展性';
+        const merit = fd.fMerit.trim();
+        const issue = fd.fIssue.trim();
+        const opinion = fd.fOpinion.trim() || '社会にとって大切な学びである';
+        const unclear = fd.fUnclear.trim();
+        const action = fd.fAction.trim() || '復習と関連する調べ学習';
+
+        let text = `今回の授業動画では、【${theme}】について学びました。`;
+        text += `動画を視聴して、【${learned}】ことがよく分かりました。`;
+        text += `特に印象に残ったのは、【${impression}】です。`;
+        text += `また、【${interest}】について興味を持ち、もっと調べてみようと思いました。`;
+
+        if (merit || issue) {
+          const m = merit || '大きな利点';
+          const i = issue || 'いくつかの課題';
+          text += `【${theme}】には【${m}】がある一方で、【${i}】もあることもわかりました。`;
+        }
+
+        text += `このことから、私は【${opinion}】と考えました。`;
+
+        if (unclear) {
+          text += `今後は今回【${unclear}】をもう少し勉強していきたいと思います。`;
+        }
+        text += `さらに、【${action}】にも取り組んでみたいと思いました。`;
+
+        // プレースホルダーの括弧【】を綺麗に外した自然な文章にするか、
+        // ユーザーが推敲しやすいように整える
+        const cleanText = text.replace(/【|】/g, '');
+
+        state.reportText = cleanText;
+        reportTextarea.value = cleanText;
+        updateCharCount();
+        saveState();
+        showToast('定型文から文章を作成しました！', '🎉');
+      }
+
+      function updateCharCount() {
+        const len = reportTextarea.value.length;
+        state.reportText = reportTextarea.value;
+        saveState();
+
+        charCount.textContent = len;
+
+        // プログレスバー計算 (上限200字)
+        const pct = Math.min((len / charLimit) * 100, 100);
+        charProgressFill.style.width = `${pct}%`;
+
+        // 状態バッジ＆カラー変化
+        if (len === 0) {
+          charCount.style.color = 'var(--text-muted)';
+          charProgressFill.style.backgroundColor = 'var(--text-muted)';
+          charStatusBadge.textContent = '未記入 ✍️';
+          charStatusBadge.style.background = '#F3F4F6';
+          charStatusBadge.style.color = '#6B7280';
+        } else if (len >= 160 && len <= 200) {
+          // ベスト範囲 (160〜200字)
+          charCount.style.color = 'var(--mint-green)';
+          charProgressFill.style.backgroundColor = 'var(--mint-green)';
+          charStatusBadge.textContent = 'バッチリ！🎉 (理想)';
+          charStatusBadge.style.background = 'var(--mint-green-light)';
+          charStatusBadge.style.color = '#008751';
+        } else if (len < 160) {
+          // まだ余裕あり
+          charCount.style.color = 'var(--sky-blue)';
+          charProgressFill.style.backgroundColor = 'var(--sky-blue)';
+          charStatusBadge.textContent = `あと ${200 - len} 字 書けます 🌿`;
+          charStatusBadge.style.background = 'var(--sky-blue-light)';
+          charStatusBadge.style.color = '#0284C7';
+        } else {
+          // 200字超過！警告
+          charCount.style.color = '#EF4444';
+          charProgressFill.style.backgroundColor = '#EF4444';
+          charStatusBadge.textContent = `${len - 200} 字 オーバー！⚠️`;
+          charStatusBadge.style.background = '#FEE2E2';
+          charStatusBadge.style.color = '#B91C1C';
+        }
+      }
+
+      reportTextarea.addEventListener('input', updateCharCount);
+
+      // 200字以内に収めるスマート調整
+      btnFit200.addEventListener('click', () => {
+        const text = reportTextarea.value.trim();
+        if (text.length <= 200) {
+          showToast('すでに200字以内に収まっています！', '👍');
+          return;
+        }
+
+        // 句点「。」で区切りながら200字以内で最も収まりの良いところでトリミング
+        let trimmed = text.substring(0, 199);
+        const lastPeriod = trimmed.lastIndexOf('。');
+        if (lastPeriod > 140) {
+          trimmed = trimmed.substring(0, lastPeriod + 1);
+        } else {
+          trimmed = text.substring(0, 200);
+        }
+
+        reportTextarea.value = trimmed;
+        updateCharCount();
+        showToast('200字以内にスマート調整しました！', '✂️');
+      });
+
+      btnRegenerate.addEventListener('click', () => {
+        openModal({
+          title: '文章を再生成しますか？',
+          body: '手順2の箇条書きデータから、文章を最初から作り直します。（手動で編集した部分は上書きされます）',
+          confirmText: '再生成する',
+          onConfirm: () => {
+            generateReportFromForm();
+          }
+        });
+      });
+
+      /* ========================================================================
+         STEP 4: アプリ連携 (ChatGPT & メモ帳アプリ)
+         ======================================================================== */
+      // クリップボードにコピー
+      async function copyReportText() {
+        const text = state.reportText.trim();
+        if (!text) {
+          showToast('コピーする文章がありません', '⚠️');
+          return false;
+        }
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            // フォールバック
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          showToast('クリップボードにコピーしました！', '📋');
+          return true;
+        } catch (err) {
+          console.error('Copy failed:', err);
+          showToast('コピーに失敗しました', '❌');
+          return false;
+        }
+      }
+
+      // ChatGPTを開く
+      function openChatGPT() {
+        const text = state.reportText.trim();
+        const prompt = `以下の文章は高校の授業動画レポート（200字以内）です。より分かりやすく自然な日本語になるよう添削し、200字以内で改善案を教えてください。\n\n${text}`;
+        
+        // クリップボードにプロンプト付き文章をコピー
+        copyReportTextCustom(prompt);
+
+        // ChatGPTのURL
+        const chatGptUrl = 'https://chatgpt.com/';
+        window.open(chatGptUrl, '_blank');
+        showToast('ChatGPTを開きました！ペーストして質問してね', '🤖');
+      }
+
+      async function copyReportTextCustom(text) {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+          }
+        } catch (e) {}
+      }
+
+      // メモ帳アプリ・共有を開く
+      async function openMemoApp() {
+        const text = state.reportText.trim();
+        if (!text) {
+          showToast('保存するレポートがありません', '⚠️');
+          return;
+        }
+
+        // スマホのWeb Share APIがあればメモ帳やLINEへ直接送れる
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: '授業動画レポート',
+              text: text
+            });
+            showToast('共有・メモ帳を開きました！', '📱');
+            return;
+          } catch (err) {
+            if (err.name !== 'AbortError') {
+              console.warn('Share API error:', err);
+            }
+          }
+        }
+
+        // Web Share APIが使えない場合：テキストファイルとしてダウンロード & クリップボード保存
+        copyReportText();
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `授業動画レポート_${formatDate(new Date())}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('レポートを保存＆コピーしました！', '💾');
+      }
+
+      function formatDate(d) {
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${m}${day}`;
+      }
+
+      /* ========================================================================
+         SAMPLE DATA LOADER (高校生向けデモ)
+         ======================================================================== */
+      btnLoadSample.addEventListener('click', () => {
+        openModal({
+          title: '見本データを読み込みますか？',
+          body: '「高校の情報・AIの倫理」をテーマにした見本を入力します。現在の入力内容は置き換わります。',
+          confirmText: '見本を入れる',
+          onConfirm: () => {
+            state.notes = [
+              { id: 'n1', text: 'AIとこれからの社会', cat: 'title' },
+              { id: 'n2', text: '生成AIの便利さと著作権問題', cat: 'keyword' },
+              { id: 'n3', text: 'AIを使う人間のリテラシーが問われている', cat: 'message' },
+              { id: 'n4', text: '道具に振り回されず主体的に判断することが大切', cat: 'conclusion' },
+              { id: 'n5', text: 'ディープフェイク', cat: 'keyword' }
+            ];
+
+            state.formData = {
+              fTheme: 'AIの進化と高校生の付き合い方',
+              fLearned: '生成AIが身近になった一方で著作権や誤情報の問題があること',
+              fImpression: 'AIの回答を鵜呑みにせず自分で確認する重要性',
+              fInterest: '学校教育でのAI活用事例',
+              fImportant: '情報の真偽を見抜くクリティカルシンキング',
+              fMerit: '勉強や調べ物の効率を大きく高められる点',
+              fIssue: '考える力を衰えさせてしまうリスクがあること',
+              fOpinion: 'AIは頼り切るのではなく自分の思考を広げる相棒として使うべきだ',
+              fUnclear: '著作権法とAI学習データの法的な線引き',
+              fAction: 'レポートの推敲に使いつつ最終確認は自分の言葉で行う'
+            };
+
+            renderStickyBoard();
+            syncFormDataToInputs();
+            generateReportFromForm();
+            setStep(3); // 3ステップ目を見せて感動体験
+            showToast('見本データを読み込みました！', '🪄');
+          }
+        });
+      });
+
+      /* ========================================================================
+         CIRCLE BUTTON SYSTEM (丸型 60px以上 ボトムドックレンダリング)
+         Apple受賞クラスのタッチターゲットと分かりやすさ
+         ======================================================================== */
+      function renderBottomDock() {
+        dockContent.innerHTML = '';
+        const step = state.currentStep;
+
+        if (step === 1) {
+          // 手順1の丸ボタン：
+          // [戻る(非活性/サンプル)] / [★ ＋メモ追加 (大70px)] / [次へ (64px)]
+          dockContent.innerHTML = `
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockClearNote" class="btn-circle btn-circle-neutral" title="入力を消去">
+                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              </button>
+              <span class="circle-label">クリア</span>
+            </div>
+
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockAddNote" class="btn-circle btn-circle-coral btn-circle-large" title="付箋を追加">
+                <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+              </button>
+              <span class="circle-label" style="color:var(--primary-coral);">＋メモ追加</span>
+            </div>
+
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockNext" class="btn-circle btn-circle-yellow" title="手順2へ進む">
+                <svg viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-7.85-1.42 1.42 5.43 5.43H5v2z"/></svg>
+              </button>
+              <span class="circle-label">次へ（整理）</span>
+            </div>
+          `;
+
+          document.getElementById('btnDockAddNote').addEventListener('click', () => {
+            addStickyNote(noteInput.value);
+          });
+
+          document.getElementById('btnDockClearNote').addEventListener('click', () => {
+            noteInput.value = '';
+            showToast('入力欄をクリアしました', '🧹');
+          });
+
+          document.getElementById('btnDockNext').addEventListener('click', () => {
+            setStep(2);
+          });
+
+        } else if (step === 2) {
+          // 手順2の丸ボタン：
+          // [前へ] / [★ 自動文章化 (大70px)] / [次へ]
+          dockContent.innerHTML = `
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockPrev" class="btn-circle btn-circle-neutral" title="手順1に戻る">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+              </button>
+              <span class="circle-label">戻る</span>
+            </div>
+
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockGenerate" class="btn-circle btn-circle-green btn-circle-large" title="200字の文章を作成">
+                <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+              </button>
+              <span class="circle-label" style="color:var(--mint-green);">文章を作る</span>
+            </div>
+
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockNext" class="btn-circle btn-circle-sky" title="手順3へ進む">
+                <svg viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-7.85-1.42 1.42 5.43 5.43H5v2z"/></svg>
+              </button>
+              <span class="circle-label">次へ（確認）</span>
+            </div>
+          `;
+
+          document.getElementById('btnDockPrev').addEventListener('click', () => setStep(1));
+          document.getElementById('btnDockGenerate').addEventListener('click', () => {
+            generateReportFromForm();
+            setStep(3);
+          });
+          document.getElementById('btnDockNext').addEventListener('click', () => setStep(3));
+
+        } else if (step === 3) {
+          // 手順3の丸ボタン（編集できる・クリアボタン・コピーボタン）：
+          // [クリア] / [★ コピー (大70px)] / [次へ（AI・外部）]
+          dockContent.innerHTML = `
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockClearText" class="btn-circle btn-circle-neutral" title="文章をクリア">
+                <svg viewBox="0 0 24 24"><path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/></svg>
+              </button>
+              <span class="circle-label">クリア</span>
+            </div>
+
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockCopy" class="btn-circle btn-circle-coral btn-circle-large" title="レポート文章をコピー">
+                <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              </button>
+              <span class="circle-label" style="color:var(--primary-coral);">コピー</span>
+            </div>
+
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockNext" class="btn-circle btn-circle-purple" title="手順4へ進む">
+                <svg viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-7.85-1.42 1.42 5.43 5.43H5v2z"/></svg>
+              </button>
+              <span class="circle-label">次へ（仕上げ）</span>
+            </div>
+          `;
+
+          document.getElementById('btnDockClearText').addEventListener('click', () => {
+            openModal({
+              title: '文章をクリアしますか？',
+              body: 'レポートの文章が消去されます。よろしいですか？（箇条書きからいつでも再生成できます）',
+              confirmText: 'クリアする',
+              onConfirm: () => {
+                reportTextarea.value = '';
+                updateCharCount();
+                showToast('文章をクリアしました', '🧹');
+              }
+            });
+          });
+
+          document.getElementById('btnDockCopy').addEventListener('click', () => {
+            copyReportText();
+          });
+
+          document.getElementById('btnDockNext').addEventListener('click', () => setStep(4));
+
+        } else if (step === 4) {
+          // 手順4の丸ボタン（ChatGPTを開くボタン・メモ帳アプリを開くボタン）：
+          // [戻る] / [★ ChatGPT (64px)] / [★ メモ帳 (64px)]
+          dockContent.innerHTML = `
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockPrev" class="btn-circle btn-circle-neutral" title="手順3に戻る">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+              </button>
+              <span class="circle-label">戻る</span>
+            </div>
+
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockChatGPT" class="btn-circle btn-circle-chatgpt btn-circle-large" title="ChatGPTを開く">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"/></svg>
+              </button>
+              <span class="circle-label" style="color:#10A37F;">ChatGPT</span>
+            </div>
+
+            <div class="circle-btn-wrapper">
+              <button type="button" id="btnDockMemo" class="btn-circle btn-circle-memo btn-circle-large" title="メモ帳アプリを開く">
+                <svg viewBox="0 0 24 24"><path d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"/></svg>
+              </button>
+              <span class="circle-label" style="color:#FF9F0A;">メモ帳</span>
+            </div>
+          `;
+
+          document.getElementById('btnDockPrev').addEventListener('click', () => setStep(3));
+          document.getElementById('btnDockChatGPT').addEventListener('click', openChatGPT);
+          document.getElementById('btnDockMemo').addEventListener('click', openMemoApp);
+        }
+      }
+
+      /* ========================================================================
+         UTILITY
+         ======================================================================== */
+      function escapeHtml(str) {
+        if (!str) return '';
+        return str
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      /* ========================================================================
+         INITIALIZATION
+         ======================================================================== */
+      loadSavedState();
+      renderStickyBoard();
+      setStep(1);
+
+    })();
+  </script>
+</body>
+</html>
